@@ -13,3 +13,4 @@ Video:
 ## References
 - https://github.com/primaryobjects/lda
 - https://www.kaggle.com/rounakbanik/ted-talks
+- http://bl.ocks.org/jhubley/25f32b1f123dca4012f1
