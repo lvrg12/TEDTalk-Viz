@@ -75,7 +75,7 @@ function zoomed() {
 
   image.enter().append("img")
       .attr("class", "tile")
-      .attr("src", function(d) { return "http://" + ["a", "b", "c", "d"][Math.random() * 4 | 0] + ".tiles.mapbox.com/v3/jhubley.kllla0l7/" + d[2] + "/" + d[0] + "/" + d[1] + ".png"; })
+      .attr("src", function(d) { return "http://" + ["a", "b", "c"][Math.random() * 3 | 0] + ".basemaps.cartocdn.com/light_all/" + d[2] + "/" + d[0] + "/" + d[1] + ".png"; })
       .style("left", function(d) { return (d[0] << 8) + "px"; })
       .style("top", function(d) { return (d[1] << 8) + "px"; });
 }
