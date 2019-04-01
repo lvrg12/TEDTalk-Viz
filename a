@@ -1,0 +1,10 @@
+{"result":[[{"term":"education","probability":0.031}],[{"term":"laughter","probability":0.07},{"term":"education","probability":0.022}]]}
+[ [ { term: 'education', probability: 0.038 },
+    { term: 'laughter', probability: 0.03 } ],
+  [ { term: 'laughter', probability: 0.044 },
+    { term: 'people', probability: 0.023 } ] ]
+[ [ { term: 'education', probability: 0.026 },
+    { term: 'laughter', probability: 0.024 } ],
+  [ { term: 'laughter', probability: 0.05 },
+    { term: 'education', probability: 0.027 },
+    { term: 'people', probability: 0.02 } ] ]
