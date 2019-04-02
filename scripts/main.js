@@ -51,6 +51,8 @@ function createMap(dataset) {
 	zoomed();
 }
 
+
+
 function zoomed() {
   var tiles = tile
       .scale(zoom.scale())
@@ -100,3 +102,5 @@ function formatLocation(p, k) {
   return (p[1] < 0 ? format(-p[1]) + "°S" : format(p[1]) + "°N") + " "
        + (p[0] < 0 ? format(-p[0]) + "°W" : format(p[0]) + "°E");
 }
+
+topicise();
