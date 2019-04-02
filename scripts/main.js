@@ -2,7 +2,7 @@ var width = Math.max(960, window.innerWidth),
     height = Math.max(500, window.innerHeight),
     prefix = prefixMatch(["webkit", "ms", "Moz", "O"]);
 
-	  d3.csv("data/ftgreenetrees.csv", function(error, dataset) { createMap(dataset) });
+	  d3.csv("data/ted_main.csv", function(error, dataset) { createMap(dataset) });
 
 var tile = d3.geo.tile()
     .size([width, height]);
@@ -46,8 +46,8 @@ function createMap(dataset) {
 	.style("fill", "#14e6b7")
 	.style("opacity", 0.7)
 	.attr("r", 8)
-	.attr("cx", function(d) {return projection([d.y,d.x])[0]})
-	.attr("cy", function(d) {return projection([d.y,d.x])[1]})
+	.attr("cx", function(d) {return projection([d.lon,d.lat])[0]})
+	.attr("cy", function(d) {return projection([d.lon,d.lat])[1]})
 	zoomed();
 }
 
@@ -62,8 +62,8 @@ function zoomed() {
       .translate(zoom.translate());
 
 			d3.selectAll("circle")
-			.attr("cx", function(d) {return projection([d.y,d.x])[0]})
-			.attr("cy", function(d) {return projection([d.y,d.x])[1]})
+			.attr("cx", function(d) {return projection([d.lon,d.lat])[0]})
+			.attr("cy", function(d) {return projection([d.lon,d.lat])[1]})
 
   var image = layer
       .style(prefix + "transform", matrix3d(tiles.scale, tiles.translate))
