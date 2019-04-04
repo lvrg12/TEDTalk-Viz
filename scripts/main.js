@@ -1,5 +1,5 @@
-var width = Math.max(960, window.innerWidth),
-    height = Math.max(500, window.innerHeight),
+var width = window.innerWidth*0.75,
+    height = window.innerHeight,
     prefix = prefixMatch(["webkit", "ms", "Moz", "O"]);
 
 d3.csv("data/ted_main.csv", function (error, dataset) { createMap(dataset) });
@@ -18,7 +18,7 @@ var zoom = d3.behavior.zoom()
     .on("zoom", zoomed);
 
 var container = d3.select("body").append("div")
-    .attr("id", "container")
+    .attr("id", "map")
     .style("width", width + "px")
     .style("height", height + "px")
     .call(zoom)
@@ -33,8 +33,9 @@ var points = container.append("svg")
 var layer = map.append("div")
     .attr("class", "layer");
 
-var info = map.append("div")
-    .attr("class", "info");
+// var info = map.append("div")
+// 		.attr("class", "info")
+// 		.style("width", width + "px");
 
 
 zoomed();
@@ -83,7 +84,7 @@ function zoomed() {
 }
 
 function mousemoved() {
-    info.text(formatLocation(projection.invert(d3.mouse(this)), zoom.scale()));
+    // info.text(formatLocation(projection.invert(d3.mouse(this)), zoom.scale()));
 }
 
 function matrix3d(scale, translate) {
@@ -103,4 +104,5 @@ function formatLocation(p, k) {
         + (p[0] < 0 ? format(-p[0]) + "°W" : format(p[0]) + "°E");
 }
 
-// topicise();
+var terms = topicise();
+getWordCloud( terms );
