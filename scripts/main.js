@@ -45,7 +45,7 @@ function createMap(dataset) {
 	.append("circle")
 	.style("fill", "#14e6b7")
 	.style("opacity", 0.7)
-	.attr("r", 8)
+	.attr("r", 8 )
 	.attr("cx", function(d) {return projection([d.lon,d.lat])[0]})
 	.attr("cy", function(d) {return projection([d.lon,d.lat])[1]})
 	zoomed();
@@ -103,4 +103,4 @@ function formatLocation(p, k) {
        + (p[0] < 0 ? format(-p[0]) + "°W" : format(p[0]) + "°E");
 }
 
-topicise();
+// topicise();
