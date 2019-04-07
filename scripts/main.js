@@ -17,12 +17,11 @@ var zoom = d3.behavior.zoom()
     .translate(projection([-73.975536, 40.691674]).map(function (x) { return -x; }))
     .on("zoom", zoomed);
 
-var container = d3.select("body").append("div")
-    .attr("id", "map")
-    .style("width", width + "px")
-    .style("height", height + "px")
-    .call(zoom)
-    .on("mousemove", mousemoved);
+var container = d3.select("div#map").call(zoom).on("mousemove", mousemoved);
+// .append("div")
+//     .attr("id", "map")
+//     .style("width", width + "px")
+//     .style("height", height + "px")
 
 var map = container.append("g")
     .attr("id", "map")
@@ -78,7 +77,7 @@ function zoomed() {
 
     image.enter().append("img")
         .attr("class", "tile")
-        .attr("src", function (d) { return "http://" + ["a", "b", "c"][Math.random() * 3 | 0] + ".basemaps.cartocdn.com/light_all/" + d[2] + "/" + d[0] + "/" + d[1] + ".png"; })
+        .attr("src", function (d) { return "https://" + ["a", "b", "c"][Math.random() * 3 | 0] + ".basemaps.cartocdn.com/light_all/" + d[2] + "/" + d[0] + "/" + d[1] + ".png"; })
         .style("left", function (d) { return (d[0] << 8) + "px"; })
         .style("top", function (d) { return (d[1] << 8) + "px"; });
 }
