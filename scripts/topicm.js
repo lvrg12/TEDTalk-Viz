@@ -39,7 +39,8 @@ function getWordCloud( terms )
             .on("end", draw)
             .start();
 
-        function draw(words) {
+        function draw(words)
+        {
             d3.select(svg_location).append("svg")
                 .attr("width", width)
                 .attr("height", height)
