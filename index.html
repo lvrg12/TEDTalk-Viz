@@ -51,7 +51,23 @@
         </div>
         
         <div id="wordCloud"></div>
-        <div id="menu"></div>
+        <div id="menu">
+            <form name="filter">
+                Year: 
+                <select name="year">
+                    <option selected="selected">All</option>
+                </select>
+                Event: 
+                <select name="location">
+                    <option selected="selected">All</option>
+                </select>
+                Occupation: 
+                <select name="occupation">
+                    <option selected="selected">All</option>
+                </select>
+                <input type="submit" value="Filter" />
+            </form>
+        </div>
     </div>
 
     <script src="scripts/stopwords.js"></script>
