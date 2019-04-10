@@ -24,10 +24,10 @@ var container = d3.select("div#map").call(zoom).on("mousemove", mousemoved);
 //     .style("height", height + "px")
 
 var map = container.append("g")
-    .attr("id", "map")
+    .attr("id", "map");
 
 var points = container.append("svg")
-    .attr("id", "points")
+    .attr("id", "points");
 
 var layer = map.append("div")
     .attr("class", "layer");
@@ -48,6 +48,13 @@ function createMap(dataset) {
         .attr("r", 8)
         .attr("cx", function (d) { return projection([d.lon, d.lat])[0] })
         .attr("cy", function (d) { return projection([d.lon, d.lat])[1] })
+        .append("title")
+        .text(function (d) {
+            return "Title: "+ d.title + "\n"
+                 + "Speaker Name: " + d.main_speaker + "\n"
+                 + "Speaker Occupation: " + d.speaker_occupation + "\n"
+                 + "Event: " + d.event;
+        });
     zoomed();
 }
 
@@ -65,7 +72,7 @@ function zoomed() {
 
     d3.selectAll("circle")
         .attr("cx", function (d) { return projection([d.lon, d.lat])[0] })
-        .attr("cy", function (d) { return projection([d.lon, d.lat])[1] })
+        .attr("cy", function (d) { return projection([d.lon, d.lat])[1] });
 
     var image = layer
         .style(prefix + "transform", matrix3d(tiles.scale, tiles.translate))
