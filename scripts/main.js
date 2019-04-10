@@ -40,25 +40,34 @@ var layer = map.append("div")
 zoomed();
 
 function createMap(dataset) {
+    var colorScale = d3.scaleLinear()
+        .domain([150000,1000000])
+        .range(["red", "green"])
+        .clamp(true);
+    var radiusScale = d3.scaleLinear()
+        .domain([100,500])
+        .range([5,12])
+        .clamp(true);
+
     d3.select("#points").selectAll("circle").data(dataset) //plotted 	locations on map
         .enter()
         .append("circle")
-        .style("fill", "#14e6b7")
-        .style("opacity", 0.7)
-        .attr("r", 8)
+        .style("opacity", .5)
+        .attr("r", function(d){return radiusScale(d.comments)})
         .attr("cx", function (d) { return projection([d.lon, d.lat])[0] })
         .attr("cy", function (d) { return projection([d.lon, d.lat])[1] })
+        .attr('fill', function(d){return colorScale(d.views)})
         .append("title")
         .text(function (d) {
             return "Title: "+ d.title + "\n"
                  + "Speaker Name: " + d.main_speaker + "\n"
                  + "Speaker Occupation: " + d.speaker_occupation + "\n"
-                 + "Event: " + d.event;
+                 + "Event: " + d.event + "\n"
+                 + "Comments: " + d.comments + "\n"
+                 + "Views: " + d.views;
         });
     zoomed();
 }
-
-
 
 function zoomed() {
     var tiles = tile
