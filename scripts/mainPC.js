@@ -119,7 +119,7 @@ function initInteractions()
 
 function initParallelSet()
 {
-    var FONT = 'media/fonts/helvetiker_regular.typeface.json';
+    var FONT = 'media/font/helvetiker_regular.typeface.json';
 
     var startField = "class";
     var ignoreFields = "";

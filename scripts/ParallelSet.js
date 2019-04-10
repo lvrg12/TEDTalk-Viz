@@ -16,7 +16,7 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
     this.data = new ProcessedData( table, null );
     this.graph = new THREE.Group();
 
-    // setSurface( this.graph );
+    setSurface( this.graph );
 
     // Grid
     if( HIVE )
@@ -400,7 +400,6 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
             {
                 var z = len + len/5;
                 var y = 0;
-                text = "mytext"
                 xR = -1.5708;
             }
             else
