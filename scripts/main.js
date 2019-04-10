@@ -103,5 +103,5 @@ function formatLocation(p, k) {
         + (p[0] < 0 ? format(-p[0]) + "°W" : format(p[0]) + "°E");
 }
 
-var terms = topicise();
-getWordCloud( terms );
+// var terms = topicise();
+// getWordCloud( terms );
