@@ -121,10 +121,14 @@ function initParallelSet()
 {
     var FONT = 'media/font/helvetiker_regular.typeface.json';
 
-    var startField = "class";
-    var ignoreFields = "";
+    // var startField = "event";
+    // var binFields = [];
+    // var ignoreFields = ["views"];
+    // var csv = loadFile( "data/tedmaintest.csv" );
 
+    var startField = "class";
     var binFields = [];
+    var ignoreFields = "";
     var csv = loadFile( "data/titanic.csv" );
 
     var table = new ProcessedTable( startField, ignoreFields, binFields, csv );
@@ -158,13 +162,13 @@ function initParallelSet()
             table[0][i] = table[0][i].toLowerCase();
 
 
-        // // removing ignoreFields from table
-        // for( var i=0; i<ignoreFields.length; i++)
-        // {
-        //     var index = table[0].indexOf(ignoreFields[i]);
-        //     for( var j=0; j<table.length; j++)
-        //         table[j].splice(index, 1);
-        // }
+        // removing ignoreFields from table
+        for( var i=0; i<ignoreFields.length; i++)
+        {
+            var index = table[0].indexOf(ignoreFields[i]);
+            for( var j=0; j<table.length; j++)
+                table[j].splice(index, 1);
+        }
 
         // binning fields
         if( binFields.length > 0 )

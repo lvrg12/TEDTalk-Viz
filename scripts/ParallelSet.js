@@ -11,6 +11,8 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
     var FONT = font;
     var table = new ProcessedTable( startField, ignoreFields, binFields, data );
     var CHART_RATIO = LEN / table.length;
+
+    var COLOR = d3.scale.category10();
     
     // parallelset info
     this.data = new ProcessedData( table, null );
@@ -256,11 +258,7 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
         }
 
         //initializing start options values
-        var colors = [0x1f77b4,0xff7f0e,0x2ca02c,0xd62728,0x9467bd,0x8c564b,0xe377c2,0x7f7f7f, 0xbcbd22, 0x17becf
-                    ,0x1f77b4,0xff7f0e,0x2ca02c,0xd62728,0x9467bd,0x8c564b,0xe377c2,0x7f7f7f, 0xbcbd22, 0x17becf
-                    ,0x1f77b4,0xff7f0e,0x2ca02c,0xd62728,0x9467bd,0x8c564b,0xe377c2,0x7f7f7f, 0xbcbd22, 0x17becf
-                    ,0x1f77b4,0xff7f0e,0x2ca02c,0xd62728,0x9467bd,0x8c564b,0xe377c2,0x7f7f7f, 0xbcbd22, 0x17becf
-                    ,0x1f77b4,0xff7f0e,0x2ca02c,0xd62728,0x9467bd,0x8c564b,0xe377c2,0x7f7f7f, 0xbcbd22, 0x17becf];
+        var colors = [0x1f77b4,0xff7f0e,0x2ca02c,0xd62728,0x9467bd,0x8c564b,0xe377c2,0x7f7f7f, 0xbcbd22, 0x17becf];
         var startField = 0;
 
         colors = colors.slice(0, fieldOptions[startField].length);
@@ -485,7 +483,7 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
             var legend = new THREE.Group();
 
             for( var l=0; l<firstField.length; l++ )
-                addTextLegend(firstField[l],colors[l],l*separation);
+                addTextLegend(firstField[l],COLOR(l),l*separation);
 
             function addTextLegend( text, color, x )
             {
@@ -537,7 +535,7 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
             // drawing archs
             for( var v=0; v<values.length; v++)
                 if( values[v] > 0 )
-                    addColumn(values[v],colors[v]);
+                    addColumn(values[v],COLOR(v));
         }
         else
         {
@@ -586,7 +584,7 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
             // drawing archs
             for( var v=0; v<values.length; v++)
                 if( values[v] > 0 )
-                    addArch(values[v],colors[v]);
+                    addArch(values[v],COLOR(v));
         }
         else
         {
