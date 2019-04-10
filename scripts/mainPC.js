@@ -121,15 +121,15 @@ function initParallelSet()
 {
     var FONT = 'media/font/helvetiker_regular.typeface.json';
 
-    // var startField = "event";
-    // var binFields = [];
-    // var ignoreFields = ["views"];
-    // var csv = loadFile( "data/tedmaintest.csv" );
-
-    var startField = "class";
+    var startField = "year";
     var binFields = [];
-    var ignoreFields = "";
-    var csv = loadFile( "data/titanic.csv" );
+    var ignoreFields = [];
+    var csv = loadFile( "data/tedmaintest.csv" );
+
+    // var startField = "class";
+    // var binFields = [];
+    // var ignoreFields = "";
+    // var csv = loadFile( "data/titanic.csv" );
 
     var table = new ProcessedTable( startField, ignoreFields, binFields, csv );
 

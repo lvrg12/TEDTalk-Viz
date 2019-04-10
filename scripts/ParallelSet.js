@@ -12,13 +12,13 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
     var table = new ProcessedTable( startField, ignoreFields, binFields, data );
     var CHART_RATIO = LEN / table.length;
 
-    var COLOR = d3.scale.category10();
+    var COLOR = d3.scale.category20();
     
     // parallelset info
     this.data = new ProcessedData( table, null );
     this.graph = new THREE.Group();
 
-    setSurface( this.graph );
+    // setSurface( this.graph );
 
     // Grid
     if( HIVE )
