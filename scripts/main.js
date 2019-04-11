@@ -128,21 +128,26 @@ function updateWordCloud( talk_ids )
 {
     var worker_lda = new Worker("scripts/worker/lda_worker.js");
 
-    d3.csv("data/transcripts.csv").then(function(data) {
-        var transcripts = [];
+	$.ajax({
+	  type: "GET",  
+	  url: "data/transcripts.csv",
+	  dataType: "text",       
+	  success: function(response)  
+	  {
+            var transcripts = [];
+            var data = $.csv.toArrays(response);
+            for( var i=0; i<talk_ids.length; i++ )
+            {
+                transcripts.push(data[talk_ids[i]][1]);
+            }
+            worker_lda.postMessage( transcripts );
+            worker_lda.onmessage = function( event )
+            {
+                getWordCloud( event.data );
+            };
 
-        for( var i=0; i<talk_ids.length; i++ )
-        {
-            transcripts.push(data[talk_ids[i]-1].transcript)
-        }
-        
-        worker_lda.postMessage( transcripts );
-        worker_lda.onmessage = function( event )
-        {
-            getWordCloud( event.data );
-        };
-
-      });
+	  }   
+    });
 
     function getWordCloud( terms )
     {
