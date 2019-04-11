@@ -62,6 +62,8 @@ Andrew
 - Web app layout
 - CSS styling
 - Filtering
+  - Updating map view on filter
+  - Updating word cloud on filter
 
 Lino
 - Dataset preprocess
