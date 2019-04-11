@@ -1,4 +1,6 @@
-var width = window.innerWidth * 0.5,
+"use strict";
+
+let width = window.innerWidth * 0.5,
     height = window.innerHeight,
     prefix = prefixMatch(["webkit", "ms", "Moz", "O"]);
 
@@ -14,6 +16,8 @@ const mapPosition = {
     long: 0
 }
 
+let mapData;
+
 /**
  * Return projection of latitude and logitude
  * @param {number} latitude 
@@ -23,45 +27,49 @@ function latLong(latitude, longitude) {
     return projection([longitude, latitude]).map(function (x) { return -x; })
 }
 
-d3.csv("data/ted_main.csv", function (error, dataset) { createMap(dataset) });
+d3.csv("data/ted_main.csv", function (error, dataset) {
+    mapData = dataset;
+    createMap(dataset)
+});
 
-var tile = d3.geo.tile()
+let tile = d3.geo.tile()
     .size([width, height]);
 
-var projection = d3.geo.mercator()
+let projection = d3.geo.mercator()
     .scale((1 << mapScale.max) / 300000)
     .translate([-width / 2, -height / 2]); // just temporary
 
-var zoom = d3.behavior.zoom()
+let zoom = d3.behavior.zoom()
     .scale(projection.scale() * 2 * Math.PI)
     .scaleExtent([1 << mapScale.min, 1 << mapScale.max])
     .translate(latLong(mapPosition.lat, mapPosition.long))
     .on("zoom", zoomed);
 
-var container = d3.select("div#map").call(zoom).on("mousemove", mousemoved);
-var map = container.append("g")
+let container = d3.select("div#map").call(zoom).on("mousemove", mousemoved);
+let map = container.append("g")
     .attr("id", "map");
 
-var points = container.append("svg")
+let points = container.append("svg")
     .attr("id", "points");
 
-var layer = map.append("div")
+let layer = map.append("div")
     .attr("class", "layer");
 
 zoomed();
 
 function createMap(dataset) {
-    var colorScale = d3.scaleLinear()
+    let colorScale = d3.scaleLinear()
         .domain([150000, 1000000])
         .range(["red", "green"])
         .clamp(true);
 
-    var radiusScale = d3.scaleLinear()
+    let radiusScale = d3.scaleLinear()
         .domain([100, 500])
         .range([5, 12])
         .clamp(true);
-    var formatComma = d3.format(",");
-    //var opacityValue = 0.9;
+
+    let formatComma = d3.format(",");
+    //let opacityValue = 0.9;
 
     d3.select("#points").selectAll("circle").data(dataset) //plotted 	locations on map
         .enter()
@@ -85,7 +93,7 @@ function createMap(dataset) {
 }
 
 function zoomed() {
-    var tiles = tile
+    let tiles = tile
         .scale(zoom.scale())
         .translate(zoom.translate())
         ();
@@ -98,7 +106,7 @@ function zoomed() {
         .attr("cx", function (d) { return projection([d.lon, d.lat])[0] })
         .attr("cy", function (d) { return projection([d.lon, d.lat])[1] });
 
-    var image = layer
+    let image = layer
         .style(prefix + "transform", matrix3d(tiles.scale, tiles.translate))
         .selectAll(".tile")
         .data(tiles, function (d) { return d; });
@@ -118,38 +126,38 @@ function mousemoved() {
 }
 
 function matrix3d(scale, translate) {
-    var k = scale / 256, r = scale % 1 ? Number : Math.round;
+    let k = scale / 256, r = scale % 1 ? Number : Math.round;
     return "matrix3d(" + [k, 0, 0, 0, 0, k, 0, 0, 0, 0, k, 0, r(translate[0] * scale), r(translate[1] * scale), 0, 1] + ")";
 }
 
 function prefixMatch(p) {
-    var i = -1, n = p.length, s = document.body.style;
+    let i = -1, n = p.length, s = document.body.style;
     while (++i < n) if (p[i] + "Transform" in s) return "-" + p[i].toLowerCase() + "-";
     return "";
 }
 
 function formatLocation(p, k) {
-    var format = d3.format("." + Math.floor(Math.log(k) / 2 - 2) + "f");
+    let format = d3.format("." + Math.floor(Math.log(k) / 2 - 2) + "f");
     return (p[1] < 0 ? format(-p[1]) + "°S" : format(p[1]) + "°N") + " "
         + (p[0] < 0 ? format(-p[0]) + "°W" : format(p[0]) + "°E");
 }
 
-// var terms = topicise();
+// let terms = topicise();
 // getWordCloud( terms );
 
 updateWordCloud([1, 2, 3]);
 
 function updateWordCloud(talk_ids) {
-    var worker_lda = new Worker("scripts/worker/lda_worker.js");
+    let worker_lda = new Worker("scripts/worker/lda_worker.js");
 
     $.ajax({
         type: "GET",
         url: "data/transcripts.csv",
         dataType: "text",
         success: function (response) {
-            var transcripts = [];
-            var data = $.csv.toArrays(response);
-            for (var i = 0; i < talk_ids.length; i++) {
+            let transcripts = [];
+            let data = $.csv.toArrays(response);
+            for (let i = 0; i < talk_ids.length; i++) {
                 transcripts.push(data[talk_ids[i]][1]);
             }
             worker_lda.postMessage(transcripts);
@@ -161,23 +169,23 @@ function updateWordCloud(talk_ids) {
     });
 
     function getWordCloud(terms) {
-        var term_count = {};
-        var term_topic = {};
+        let term_count = {};
+        let term_topic = {};
 
-        for (var i = 0; i < terms.length; i++) {
+        for (let i = 0; i < terms.length; i++) {
             term_count[terms[i][1]] = terms[i][2];
             term_topic[terms[i][1]] = terms[i][0];
         }
 
-        var svg_location = "#wordCloud";
-        var width = $(wordCloud).width();
-        var height = $(wordCloud).height();
+        let svg_location = "#wordCloud";
+        let width = $(wordCloud).width();
+        let height = $(wordCloud).height();
 
-        var fill = d3.scale.category10();
+        let fill = d3.scale.category10();
 
-        var word_entries = d3.entries(term_count);
+        let word_entries = d3.entries(term_count);
 
-        var xScale = d3.scale.linear()
+        let xScale = d3.scale.linear()
             .domain([0, d3.max(word_entries, function (d) {
                 return d.value;
             })
