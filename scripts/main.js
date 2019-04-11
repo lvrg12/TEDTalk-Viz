@@ -71,9 +71,10 @@ function createMap(dataset) {
     let formatComma = d3.format(",");
     //let opacityValue = 0.9;
 
+    d3.select("#points").selectAll("circle").data(dataset).exit().remove();
+
     d3.select("#points").selectAll("circle").data(dataset) //plotted 	locations on map
-        .enter()
-        .append("circle")
+        .enter().append("circle")
         .style("opacity", .5)
         // .style("opacity", function (d) { return opacityValue(d.year, d.occupation)})
         .attr("r", function (d) { return radiusScale(d.comments) })
@@ -223,10 +224,31 @@ function updateWordCloud(talk_ids) {
 
         d3.layout.cloud().stop();
     }
+}
 
+function applyFilter(){
+    let year = document.forms.filter.year.value;
+    if (year === "All")
+        createMap(mapData);
+    else {
+        let dataset = [];
+
+        for (let i = 0; i < mapData.length; i++) {
+            let d = mapData[i];
+            if (d.year == year)
+                dataset.push(d);
+        }
+
+        createMap(dataset);
+    }
 }
 
 document.forms.filter.addEventListener("submit", function (e) {
     // Do not actually submit the form
     e.preventDefault();
+    applyFilter();
+}, true);
+
+document.forms.filter.addEventListener("change", function (e) {
+    applyFilter();
 }, true);
