@@ -384,26 +384,27 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
         for( var f=0; f<columns.length; f++)
         {
             addText(fieldNames[f],markerLocation(f,0),true,false);
+            var reduceHeight = len;
             for( var j=0; j<columns[f]; j++)
-                addText(optionNames[f][j],markerLocation(f,j),false,true);
+                addText(optionNames[f][j],markerLocation(f,j),false,true, (fieldNames[f] == "occupation") ? reduceHeight-=0.015 : len );
         }
 
         addLegend( firstField, colors );
 
-        function addText( text, coord, isField, isMarkerVisible )
+        function addText( text, coord, isField, isMarkerVisible, text_height )
         {
             var xR = 0;
             var x = coord[0];
             if( isField )
             {
                 var z = len + len/5;
-                var y = 0;
+                var y = text_height;
                 xR = -1.5708;
             }
             else
             {
                 var z = coord[2];
-                var y = len;
+                var y = text_height;
             }
 
             var loader = new THREE.FontLoader();
@@ -429,17 +430,17 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
             } );
 
             if( isMarkerVisible )
-                addMarker( coord );
+                addMarker( coord, text_height );
         }
 
-        function addMarker( coord )
+        function addMarker( coord, text_height )
         {
             var x = coord[0];
             var z = coord[2];
 
             var geometry = new THREE.Geometry();
             geometry.vertices.push(new THREE.Vector3( x, 0, z ));
-            geometry.vertices.push(new THREE.Vector3( x, len, z ));
+            geometry.vertices.push(new THREE.Vector3( x, text_height, z ));
             var marker = new THREE.Line( geometry, material );
             marker.name = "marker";
             obj.add( marker );
