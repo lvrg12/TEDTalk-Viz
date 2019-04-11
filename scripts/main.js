@@ -16,7 +16,7 @@ const mapPosition = {
     long: 0
 }
 
-const maxIDs = 20;
+const maxIDs = 10;
 
 let mapData;
 
