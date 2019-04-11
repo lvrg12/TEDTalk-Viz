@@ -119,5 +119,74 @@ function formatLocation(p, k) {
         + (p[0] < 0 ? format(-p[0]) + "°W" : format(p[0]) + "°E");
 }
 
-// var terms = topicise();
-// getWordCloud( terms );
+updateWordCloud( [1,2,3,4] );
+
+function updateWordCloud( talk_ids )
+{
+    var worker_lda = new Worker("scripts/worker/lda_worker.js");
+    worker_lda.postMessage( p.data );
+    worker_lda.onmessage = function( event )
+    {
+        getWordCloud( event.data );
+    };
+
+    function getWordCloud( terms )
+    {
+        var term_count = {};
+        var term_topic = {};
+
+        for( var i=0; i<terms.length; i++ )
+        {
+            term_count[terms[i][1]] = terms[i][2];
+            term_topic[terms[i][1]] = terms[i][0];
+        }
+
+        var svg_location = "#wordCloud";
+        var width = $(wordCloud).width();
+        var height = $(wordCloud).height();
+
+        var fill = d3.scale.category10();
+
+        var word_entries = d3.entries(term_count);
+
+        var xScale = d3.scale.linear()
+            .domain([0, d3.max(word_entries, function(d) {
+                return d.value;
+            })
+            ])
+            .range([10,100]);
+
+        d3.layout.cloud().size([width, height])
+            .timeInterval(20)
+            .words(word_entries)
+            .fontSize(function(d) { return xScale(+d.value); })
+            .text(function(d) { return d.key; })
+            .rotate(function() { return ~~(Math.random() * 2) * 90; })
+            .font("Impact")
+            .on("end", draw)
+            .start();
+
+        function draw(words)
+        {
+            d3.select(svg_location).append("svg")
+                .attr("width", width)
+                .attr("height", height)
+            .append("g")
+                .attr("transform", "translate(" + [width >> 1, height >> 1] + ")")
+            .selectAll("text")
+                .data(words)
+            .enter().append("text")
+                .style("font-size", function(d) { return xScale(d.value) + "px"; })
+                .style("font-family", "Impact")
+                .style("fill", function(d, i) {  console.log(d.text); return fill(term_topic[d.text]); })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) { return d.key; });
+        }
+
+        d3.layout.cloud().stop();
+    }
+
+}
