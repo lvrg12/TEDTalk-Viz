@@ -12,23 +12,13 @@ var tile = d3.geo.tile()
     .size([width, height]);
 
 var projection = d3.geo.mercator()
-    .scale((1 << mapInitScale) / 2 / Math.PI)
+    .scale((1 << 25) / 300000)
     .translate([-width / 2, -height / 2]); // just temporary
-
-/**
- * Takes in a latitude and longitude and returns the projection map
- * @param {number} latitude 
- * @param {number} longitude 
- */
-function latLong(latitude, longitude){
-    return projection([longitude, latitude]).map(function (x) { return -x; })
-}
 
 var zoom = d3.behavior.zoom()
     .scale(projection.scale() * 2 * Math.PI)
-    .scaleExtent([1 << mapMinScale, 1 << mapMaxScale])
-    // .translate(latLong(-73.975536, 40.691674))
-    .translate(latLong(0, 0))
+    .scaleExtent([1 << 9, 1 << 25])
+    .translate(projection([0, 0]).map(function (x) { return -x; }))
     .on("zoom", zoomed);
 
 var container = d3.select("div#map").call(zoom).on("mousemove", mousemoved);
