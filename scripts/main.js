@@ -28,7 +28,7 @@ var zoom = d3.behavior.zoom()
     .scale(projection.scale() * 2 * Math.PI)
     .scaleExtent([1 << mapMinScale, 1 << mapMaxScale])
     // .translate(latLong(-73.975536, 40.691674))
-    .translate(latLong(60, 0))
+    .translate(latLong(0, 0))
     .on("zoom", zoomed);
 
 var container = d3.select("div#map").call(zoom).on("mousemove", mousemoved);
