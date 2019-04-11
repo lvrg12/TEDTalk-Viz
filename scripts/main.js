@@ -218,3 +218,7 @@ function updateWordCloud(talk_ids) {
 
 }
 
+document.forms.filter.addEventListener("submit", function (e) {
+    // Do not actually submit the form
+    e.preventDefault();
+}, true);
