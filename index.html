@@ -15,7 +15,7 @@
 
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="scripts/jquery.csv.min.js"></script>
     <script src="scripts/three.min.js"></script>
 
@@ -30,15 +30,12 @@
     <script src="https://d3js.org/d3-time-format.v2.min.js"></script>
     <script src="https://d3js.org/d3-scale.v3.min.js"></script>
 
-
-        <!-- <script src="scripts/worker/scag_worker.js"></script> -->
-
+    <!-- <script src="scripts/worker/scag_worker.js"></script> -->
 </head>
 
 <body>
     <div id="map"></div>
     <div id="rightColumn">
-
         <div id="parallelCoordinates">
             <a-scene embedded>
                 <a-sky color="#ECECEC"></a-sky>
@@ -49,18 +46,21 @@
                 </a-entity>
             </a-scene>
         </div>
-        
+
         <div id="wordCloud"></div>
+        
         <div id="menu">
             <form name="filter">
                 Year: 
                 <select name="year">
                     <option selected="selected">All</option>
                 </select>
+
                 Event: 
                 <select name="location">
                     <option selected="selected">All</option>
                 </select>
+                
                 Occupation: 
                 <select name="occupation">
                     <option selected="selected">All</option>
