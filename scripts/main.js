@@ -27,8 +27,50 @@ function latLong(latitude, longitude) {
     return projection([longitude, latitude]).map(function (x) { return -x; })
 }
 
+function generateOccupations(dataset) {
+    let occupations = [];
+    for (let i = 0; i < dataset.length; i++) {
+        let d = dataset[i];
+
+        if (d.occupation.trim() !== "" && occupations.indexOf(d.occupation) < 0)
+            occupations.push(d.occupation);
+    }
+
+    occupations.sort();
+
+    for (let i = 0; i < occupations.length; i++) {
+        let occupation = occupations[i];
+        let option = document.createElement("option");
+        option.innerHTML = occupation;
+
+        document.forms.filter.occupation.appendChild(option);
+    }
+}
+
+function generateEvents(dataset) {
+    let locations = [];
+    for(let i = 0; i < dataset.length; i++){
+        let d = dataset[i];
+
+        if(d.location.trim() !== "" && locations.indexOf(d.location) < 0)
+            locations.push(d.location)
+    }
+
+    locations.sort();
+
+    for(let i = 0; i < locations.length; i++){
+        let location = locations[i];
+        let option = document.createElement("option");
+        option.innerHTML = location;
+
+        document.forms.filter.location.appendChild(option);
+    }
+}
+
 d3.csv("data/ted_main.csv", function (error, dataset) {
     mapData = dataset;
+    generateOccupations(dataset);
+    generateEvents(dataset);
     createMap(dataset)
 });
 
@@ -226,16 +268,19 @@ function updateWordCloud(talk_ids) {
     }
 }
 
-function applyFilter(){
+function applyFilter() {
     let year = document.forms.filter.year.value;
-    if (year === "All")
+    let loc = document.forms.filter.location.value;
+    let occ = document.forms.filter.occupation.value;
+    
+    if (year === "All" && loc === "All" && occ === "All")
         createMap(mapData);
     else {
         let dataset = [];
 
         for (let i = 0; i < mapData.length; i++) {
             let d = mapData[i];
-            if (d.year == year)
+            if ((d.year == year || year === "All") && (d.location == loc || loc === "All") && (d.occupation == occ || occ === "All"))
                 dataset.push(d);
         }
 
