@@ -1,5 +1,5 @@
 # CS5331-DataVisualization Text Geospatial Network Visualization
-Text-Geospatial-Network visualizaiton on TED Talks data.
+Text-Geospatial-Network visualization on TED Talks data.
 
 [View Demo](https://lvrg12.github.io/TEDTalk-Viz/)
 
