@@ -6,6 +6,8 @@ Text-Geospatial-Network visualization on TED Talks data.
 ## Description
 This web application shows a visulization of 1500 TED Talks given from 2002 to 2017. It consists of a geospatial map, parallel coordinates, a word cloud, and a filter mechanism. TEDTalk-Viz is inteded to show the geographical distribution of TED talks. It also shows the popularity and controversy of each talk based on the number of views and comments. Using a topic model word cloud, the app is able to show the main topics and terms for the selected talks. Finally, using both the selection and parallel coordinates, the web app can show the distribution of speaker occupations.
 
+![alt text](media/demo.gif)
+
 ## Dataset
 The dataset utilized was gotten from Kaggle. It containes the talk title, # of speaker, speaker name, speaker occupation, event, location, comments, and views. There is a second dataset that contains the transcript for each talk. Both of them are saved in csv files. There was a lot of preprocessing done, some of which got the latitude and longitude of the locaton, and separating the year from the event.
 
