@@ -4,9 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="origin-trial" data-feature="WebVR (For Chrome M62+)" data-expires="2018-09-11" content="AqhFUYKxq/d+E8CDT0fuYRCg8TvlTP52x0Jv7I9t27sLhR30LmcahBRfSwzP89ukjs2+ia99VrrLoRyaFAwJVA0AAABQeyJvcmlnaW4iOiJodHRwczovL3RocmVlanMub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJWUjEuMU02MiIsImV4cGlyeSI6MTUzNjYyNDAwMH0=">
-    <meta http-equiv="origin-trial" data-feature="WebXR Device API (For Chrome M69+)" data-expires="2018-10-27" content="An4ZYOGvf6kVHNxqZxS02TPAvpZESkmBhcVCM/byViDDuEB2XKvCF43aCJjrAU/R8H3WDlv+1bDGTL/XxstHGgoAAABTeyJvcmlnaW4iOiJodHRwczovL3RocmVlanMub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJYUkRldmljZU02OSIsImV4cGlyeSI6MTU0MDY1NTAyMn0=">
-    <meta http-equiv="origin-trial" data-feature="WebXR Gamepad Support" data-expires="2018-10-24" content="Agrr6lZhlwzv5jmv/mpLZA37DIiVcg3HvX8bH8EWB+OBruV3sUJuzDfYz6qs/je+LcH41DkrmPn4k9RaUaqpQAAAAABYeyJvcmlnaW4iOiJodHRwczovL3RocmVlanMub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJYUkdhbWVwYWRTdXBwb3J0IiwiZXhwaXJ5IjoxNTQwMzg4NjI0fQ==">
+    <meta http-equiv="origin-trial" data-feature="WebVR (For Chrome M62+)" data-expires="2018-09-11"
+        content="AqhFUYKxq/d+E8CDT0fuYRCg8TvlTP52x0Jv7I9t27sLhR30LmcahBRfSwzP89ukjs2+ia99VrrLoRyaFAwJVA0AAABQeyJvcmlnaW4iOiJodHRwczovL3RocmVlanMub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJWUjEuMU02MiIsImV4cGlyeSI6MTUzNjYyNDAwMH0=">
+    <meta http-equiv="origin-trial" data-feature="WebXR Device API (For Chrome M69+)" data-expires="2018-10-27"
+        content="An4ZYOGvf6kVHNxqZxS02TPAvpZESkmBhcVCM/byViDDuEB2XKvCF43aCJjrAU/R8H3WDlv+1bDGTL/XxstHGgoAAABTeyJvcmlnaW4iOiJodHRwczovL3RocmVlanMub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJYUkRldmljZU02OSIsImV4cGlyeSI6MTU0MDY1NTAyMn0=">
+    <meta http-equiv="origin-trial" data-feature="WebXR Gamepad Support" data-expires="2018-10-24"
+        content="Agrr6lZhlwzv5jmv/mpLZA37DIiVcg3HvX8bH8EWB+OBruV3sUJuzDfYz6qs/je+LcH41DkrmPn4k9RaUaqpQAAAAABYeyJvcmlnaW4iOiJodHRwczovL3RocmVlanMub3JnOjQ0MyIsImZlYXR1cmUiOiJXZWJYUkdhbWVwYWRTdXBwb3J0IiwiZXhwaXJ5IjoxNTQwMzg4NjI0fQ==">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>TED Talk - Visualization</title>
@@ -50,26 +53,36 @@
         </div>
 
         <div id="wordCloud"></div>
-        
+
         <div id="menu">
             <form name="filter">
-                Year: 
+                Year:
                 <select name="year">
                     <option selected="selected">All</option>
-                    <option>2002</option><option>2003</option><option>2004</option>
-                    <option>2005</option><option>2006</option><option>2007</option>
-                    <option>2008</option><option>2009</option><option>2010</option>
-                    <option>2011</option><option>2012</option><option>2013</option>
-                    <option>2014</option><option>2015</option><option>2016</option>
+                    <option>2002</option>
+                    <option>2003</option>
+                    <option>2004</option>
+                    <option>2005</option>
+                    <option>2006</option>
+                    <option>2007</option>
+                    <option>2008</option>
+                    <option>2009</option>
+                    <option>2010</option>
+                    <option>2011</option>
+                    <option>2012</option>
+                    <option>2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+                    <option>2016</option>
                     <option>2017</option>
                 </select>
 
-                Event: 
+                Event:
                 <select name="location">
                     <option selected="selected">All</option>
                 </select>
-                
-                Occupation: 
+
+                Occupation:
                 <select name="occupation">
                     <option selected="selected">All</option>
                     <option>Artist</option>
