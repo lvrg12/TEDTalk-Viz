@@ -22,11 +22,6 @@ var zoom = d3.behavior.zoom()
     .on("zoom", zoomed);
 
 var container = d3.select("div#map").call(zoom).on("mousemove", mousemoved);
-// .append("div")
-//     .attr("id", "map")
-//     .style("width", width + "px")
-//     .style("height", height + "px")
-
 var map = container.append("g")
     .attr("id", "map");
 
@@ -35,10 +30,6 @@ var points = container.append("svg")
 
 var layer = map.append("div")
     .attr("class", "layer");
-
-// var info = map.append("div")
-// 		.attr("class", "info")
-// 		.style("width", width + "px");
 
 zoomed();
 
@@ -52,11 +43,14 @@ function createMap(dataset) {
         .domain([100, 500])
         .range([5, 12])
         .clamp(true);
+    var formatComma = d3.format(",");
+    //var opacityValue = 0.9;
 
     d3.select("#points").selectAll("circle").data(dataset) //plotted 	locations on map
         .enter()
         .append("circle")
         .style("opacity", .5)
+       // .style("opacity", function (d) { return opacityValue(d.year, d.occupation)})
         .attr("r", function (d) { return radiusScale(d.comments) })
         .attr("cx", function (d) { return projection([d.lon, d.lat])[0] })
         .attr("cy", function (d) { return projection([d.lon, d.lat])[1] })
@@ -66,9 +60,8 @@ function createMap(dataset) {
             return "Title: " + d.title + "\n"
                 + "Speaker Name: " + d.main_speaker + "\n"
                 + "Speaker Occupation: " + d.speaker_occupation + "\n"
-                + "Event: " + d.event + "\n"
-                + "Comments: " + d.comments + "\n"
-                + "Views: " + d.views;
+                + "Comments: " + formatComma(d.comments) + "\n"
+                + "Views: " + formatComma(d.views);
         });
 
     zoomed();
@@ -214,3 +207,4 @@ function updateWordCloud( talk_ids )
     }
 
 }
+
