@@ -119,16 +119,30 @@ function formatLocation(p, k) {
         + (p[0] < 0 ? format(-p[0]) + "°W" : format(p[0]) + "°E");
 }
 
-updateWordCloud( [1,2,3,4] );
+// var terms = topicise();
+// getWordCloud( terms );
+
+updateWordCloud( [1,2,3] );
 
 function updateWordCloud( talk_ids )
 {
     var worker_lda = new Worker("scripts/worker/lda_worker.js");
-    worker_lda.postMessage( p.data );
-    worker_lda.onmessage = function( event )
-    {
-        getWordCloud( event.data );
-    };
+
+    d3.csv("data/transcripts.csv").then(function(data) {
+        var transcripts = [];
+
+        for( var i=0; i<talk_ids.length; i++ )
+        {
+            transcripts.push(data[talk_ids[i]-1].transcript)
+        }
+        
+        worker_lda.postMessage( transcripts );
+        worker_lda.onmessage = function( event )
+        {
+            getWordCloud( event.data );
+        };
+
+      });
 
     function getWordCloud( terms )
     {
