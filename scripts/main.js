@@ -8,13 +8,13 @@ var tile = d3.geo.tile()
     .size([width, height]);
 
 var projection = d3.geo.mercator()
-    .scale((1 << 25) / 2 / Math.PI)
+    .scale((1 << 25) / 300000)
     .translate([-width / 2, -height / 2]); // just temporary
 
 var zoom = d3.behavior.zoom()
     .scale(projection.scale() * 2 * Math.PI)
     .scaleExtent([1 << 9, 1 << 25])
-    .translate(projection([-73.975536, 40.691674]).map(function (x) { return -x; }))
+    .translate(projection([0, 0]).map(function (x) { return -x; }))
     .on("zoom", zoomed);
 
 var container = d3.select("div#map").call(zoom).on("mousemove", mousemoved);
