@@ -1,6 +1,10 @@
-var width = window.innerWidth*0.5,
+var width = window.innerWidth * 0.5,
     height = window.innerHeight,
     prefix = prefixMatch(["webkit", "ms", "Moz", "O"]);
+
+let mapMinScale = 11;
+let mapMaxScale = 25;
+let mapInitScale = 14;
 
 d3.csv("data/ted_main.csv", function (error, dataset) { createMap(dataset) });
 
@@ -8,13 +12,23 @@ var tile = d3.geo.tile()
     .size([width, height]);
 
 var projection = d3.geo.mercator()
-    .scale((1 << 25) / 300000)
+    .scale((1 << mapInitScale) / 2 / Math.PI)
     .translate([-width / 2, -height / 2]); // just temporary
+
+/**
+ * Takes in a latitude and longitude and returns the projection map
+ * @param {number} latitude 
+ * @param {number} longitude 
+ */
+function latLong(latitude, longitude){
+    return projection([longitude, latitude]).map(function (x) { return -x; })
+}
 
 var zoom = d3.behavior.zoom()
     .scale(projection.scale() * 2 * Math.PI)
-    .scaleExtent([1 << 9, 1 << 25])
-    .translate(projection([0, 0]).map(function (x) { return -x; }))
+    .scaleExtent([1 << mapMinScale, 1 << mapMaxScale])
+    // .translate(latLong(-73.975536, 40.691674))
+    .translate(latLong(0, 0))
     .on("zoom", zoomed);
 
 var container = d3.select("div#map").call(zoom).on("mousemove", mousemoved);
@@ -36,36 +50,37 @@ var layer = map.append("div")
 // 		.attr("class", "info")
 // 		.style("width", width + "px");
 
-
 zoomed();
 
 function createMap(dataset) {
     var colorScale = d3.scaleLinear()
-        .domain([150000,1000000])
+        .domain([150000, 1000000])
         .range(["red", "green"])
         .clamp(true);
+
     var radiusScale = d3.scaleLinear()
-        .domain([100,500])
-        .range([5,12])
+        .domain([100, 500])
+        .range([5, 12])
         .clamp(true);
 
     d3.select("#points").selectAll("circle").data(dataset) //plotted 	locations on map
         .enter()
         .append("circle")
         .style("opacity", .5)
-        .attr("r", function(d){return radiusScale(d.comments)})
+        .attr("r", function (d) { return radiusScale(d.comments) })
         .attr("cx", function (d) { return projection([d.lon, d.lat])[0] })
         .attr("cy", function (d) { return projection([d.lon, d.lat])[1] })
-        .attr('fill', function(d){return colorScale(d.views)})
+        .attr('fill', function (d) { return colorScale(d.views) })
         .append("title")
         .text(function (d) {
-            return "Title: "+ d.title + "\n"
-                 + "Speaker Name: " + d.main_speaker + "\n"
-                 + "Speaker Occupation: " + d.speaker_occupation + "\n"
-                 + "Event: " + d.event + "\n"
-                 + "Comments: " + d.comments + "\n"
-                 + "Views: " + d.views;
+            return "Title: " + d.title + "\n"
+                + "Speaker Name: " + d.main_speaker + "\n"
+                + "Speaker Occupation: " + d.speaker_occupation + "\n"
+                + "Event: " + d.event + "\n"
+                + "Comments: " + d.comments + "\n"
+                + "Views: " + d.views;
         });
+
     zoomed();
 }
 
