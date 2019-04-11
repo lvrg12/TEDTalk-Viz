@@ -16,6 +16,8 @@ const mapPosition = {
     long: 0
 }
 
+const maxIDs = 20;
+
 let mapData;
 
 /**
@@ -49,16 +51,16 @@ function generateOccupations(dataset) {
 
 function generateEvents(dataset) {
     let locations = [];
-    for(let i = 0; i < dataset.length; i++){
+    for (let i = 0; i < dataset.length; i++) {
         let d = dataset[i];
 
-        if(d.location.trim() !== "" && locations.indexOf(d.location) < 0)
+        if (d.location.trim() !== "" && locations.indexOf(d.location) < 0)
             locations.push(d.location)
     }
 
     locations.sort();
 
-    for(let i = 0; i < locations.length; i++){
+    for (let i = 0; i < locations.length; i++) {
         let location = locations[i];
         let option = document.createElement("option");
         option.innerHTML = location;
@@ -188,9 +190,19 @@ function formatLocation(p, k) {
 // let terms = topicise();
 // getWordCloud( terms );
 
-updateWordCloud([1, 2, 3]);
+(function () {
+    let ids = [];
+
+    for (let i = 0; i < maxIDs; i++)
+        ids.push(i);
+
+    updateWordCloud(ids);
+})();
 
 function updateWordCloud(talk_ids) {
+    let svg_location = "#wordCloud";
+    d3.select(svg_location).select("svg").remove();
+
     let worker_lda = new Worker("scripts/worker/lda_worker.js");
 
     $.ajax({
@@ -220,7 +232,6 @@ function updateWordCloud(talk_ids) {
             term_topic[terms[i][1]] = terms[i][0];
         }
 
-        let svg_location = "#wordCloud";
         let width = $(wordCloud).width();
         let height = $(wordCloud).height();
 
@@ -268,32 +279,44 @@ function updateWordCloud(talk_ids) {
     }
 }
 
-function applyFilter() {
+function applyFilter(updateCloud) {
     let year = document.forms.filter.year.value;
     let loc = document.forms.filter.location.value;
     let occ = document.forms.filter.occupation.value;
-    
-    if (year === "All" && loc === "All" && occ === "All")
+
+    if (year === "All" && loc === "All" && occ === "All") {
         createMap(mapData);
-    else {
+
+        let ids = [];
+
+        for (let i = 0; i < maxIDs; i++)
+            ids.push(i);
+
+        updateWordCloud(ids);
+    } else {
         let dataset = [];
+        let ids = [];
 
         for (let i = 0; i < mapData.length; i++) {
             let d = mapData[i];
-            if ((d.year == year || year === "All") && (d.location == loc || loc === "All") && (d.occupation == occ || occ === "All"))
+            if ((d.year == year || year === "All") && (d.location == loc || loc === "All") && (d.occupation == occ || occ === "All")) {
                 dataset.push(d);
+                if (ids.length < maxIDs)
+                    ids.push(i)
+            }
         }
 
         createMap(dataset);
+        updateWordCloud(ids);
     }
 }
 
 document.forms.filter.addEventListener("submit", function (e) {
     // Do not actually submit the form
     e.preventDefault();
-    applyFilter();
+    applyFilter(true);
 }, true);
 
 document.forms.filter.addEventListener("change", function (e) {
-    applyFilter();
+    applyFilter(false);
 }, true);
