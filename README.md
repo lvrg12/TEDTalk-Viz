@@ -8,7 +8,7 @@ Video:
 
 
 ## Features
-- views 150000 to 1000000
+- views 450000 to 1000000
 - comements 100 to 500
 
 ## Development

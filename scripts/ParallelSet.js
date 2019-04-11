@@ -12,7 +12,7 @@ function ParallelSet( size, font, data, startField, ignoreFields, binFields )
     var table = new ProcessedTable( startField, ignoreFields, binFields, data );
     var CHART_RATIO = LEN / table.length;
 
-    var COLOR = d3.scale.category20();
+    var COLOR = d3.scale.category10();
     
     // parallelset info
     this.data = new ProcessedData( table, null );

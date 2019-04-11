@@ -134,10 +134,7 @@ function initParallelSet()
     var table = new ProcessedTable( startField, ignoreFields, binFields, csv );
 
     var parallel_set = new ParallelSet( 0.25, FONT, table, startField, ignoreFields, binFields );
-    // parallel_set.graph.position.set( ROOM_SIZE * 4.75, -0.15, -0.65 );
-    // parallel_set.graph.rotation.set( 0, -Math.PI/2, 0 );
     scene.add( parallel_set.graph );
-    // parallel_set.graph.visible = false;
 
     function loadFile( file )
     {
