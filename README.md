@@ -2,6 +2,7 @@
 Text-Geospatial-Network visualization on TED Talks data.
 
 [View Demo](https://lvrg12.github.io/TEDTalk-Viz/)
+
 Video Demo (data/TEDTalkVizViddemo.mp4)
 
 ## Description
